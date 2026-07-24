@@ -33,73 +33,233 @@ OBS_COLOR = "#EF4444"
 st.markdown(
     """
     <style>
-    .stApp { background: #f6f7f9; }
-    .main-title {font-size: 34px; font-weight: 900; color:#111; margin-bottom:0px;}
-    .subtitle {font-size: 16px; color:#5b6470; margin-top:0px;}
-    section[data-testid="stSidebar"] {background: linear-gradient(180deg,#090909 0%,#1a1a1a 100%);}
-    section[data-testid="stSidebar"] * {color: #fff;}
-    section[data-testid="stSidebar"] div[data-testid="stImage"] {background:#ffffff; border-radius:6px; padding:4px; border:1px solid #ffffff55;}
-    .step-card {border:1px solid #444; border-radius:10px; padding:14px; margin-bottom:14px; background:#141414;}
-    .step-number {display:inline-block; background:#ffc400; color:#111 !important; border-radius:50%; width:28px; height:28px; text-align:center; font-weight:900; line-height:28px; margin-right:8px;}
-    .kpi-card {background:white; border:1px solid #e1e5ea; border-radius:14px; padding:18px 20px; box-shadow:0 1px 4px rgba(0,0,0,0.04); min-height:115px;}
-    .kpi-title {font-size:13px; color:#111; font-weight:800; text-transform:uppercase;}
-    .kpi-value {font-size:34px; color:#111; font-weight:900; line-height:1.1;}
-    .kpi-note {font-size:13px; color:#657080;}
-    .panel {background:white; border:1px solid #e1e5ea; border-radius:14px; padding:18px; box-shadow:0 1px 4px rgba(0,0,0,0.04);}
-    .critical-note {background:#fff1f1; border-left:5px solid #dc2626; padding:11px 14px; border-radius:5px; margin:8px 0 15px 0; color:#7f1d1d;}
-    div[data-testid="stDownloadButton"] button, div.stButton > button {background:#ffc400; color:#111; border:none; font-weight:800; border-radius:8px;}
-    div[data-testid="stFileUploader"] {border:1px dashed #ffc400; border-radius:10px; padding:8px;}
+    /* =====================================================
+       FONDO GENERAL
+    ===================================================== */
+    .stApp {
+        background: #f6f7f9;
+    }
 
+    .main-title {
+        font-size: 34px;
+        font-weight: 900;
+        color: #111111;
+        margin-bottom: 0;
+    }
+
+    .subtitle {
+        font-size: 16px;
+        color: #5b6470;
+        margin-top: 0;
+    }
+
+    /* =====================================================
+       SIDEBAR
+    ===================================================== */
+    section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #090909 0%, #1a1a1a 100%);
+    }
+
+    /* Solo los textos normales del sidebar quedan blancos */
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3,
+    section[data-testid="stSidebar"] small {
+        color: #ffffff;
+    }
+
+    section[data-testid="stSidebar"] div[data-testid="stImage"] {
+        background: #ffffff;
+        border-radius: 6px;
+        padding: 4px;
+        border: 1px solid #ffffff55;
+    }
+
+    /* =====================================================
+       TARJETAS DE PASOS
+    ===================================================== */
+    .step-card {
+        border: 1px solid #444444;
+        border-radius: 10px;
+        padding: 14px;
+        margin-bottom: 14px;
+        background: #141414;
+        color: #ffffff;
+    }
+
+    .step-card b,
+    .step-card small {
+        color: #ffffff !important;
+    }
+
+    .step-number {
+        display: inline-block;
+        background: #ffc400;
+        color: #111111 !important;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        text-align: center;
+        font-weight: 900;
+        line-height: 28px;
+        margin-right: 8px;
+    }
+
+    /* =====================================================
+       CARGADOR DE ARCHIVOS
+    ===================================================== */
+    div[data-testid="stFileUploader"] {
+        border: 1px dashed #ffc400;
+        border-radius: 10px;
+        padding: 8px;
+    }
+
+    section[data-testid="stSidebar"]
+    div[data-testid="stFileUploaderDropzone"] {
+        background-color: #ffffff !important;
+        border-radius: 10px !important;
+        border: 1px dashed #ffc400 !important;
+    }
+
+    /* Texto principal: Drag and drop file here */
+    section[data-testid="stSidebar"]
+    div[data-testid="stFileUploaderDropzone"] p {
+        color: #111111 !important;
+        opacity: 1 !important;
+    }
+
+    /* Texto secundario: límite y formatos */
+    section[data-testid="stSidebar"]
+    div[data-testid="stFileUploaderDropzone"] small {
+        color: #5b6470 !important;
+        opacity: 1 !important;
+    }
+
+    /* Contenedor específico de instrucciones */
+    section[data-testid="stSidebar"]
+    div[data-testid="stFileUploaderDropzoneInstructions"] {
+        color: #111111 !important;
+    }
+
+    section[data-testid="stSidebar"]
+    div[data-testid="stFileUploaderDropzoneInstructions"] p {
+        color: #111111 !important;
+        opacity: 1 !important;
+    }
+
+    section[data-testid="stSidebar"]
+    div[data-testid="stFileUploaderDropzoneInstructions"] small {
+        color: #5b6470 !important;
+        opacity: 1 !important;
+    }
+
+    /* Botón Browse files */
+    section[data-testid="stSidebar"]
+    div[data-testid="stFileUploaderDropzone"] button {
+        background-color: #ffc400 !important;
+        color: #111111 !important;
+        border: 1px solid #d9a700 !important;
+        font-weight: 800 !important;
+        opacity: 1 !important;
+    }
+
+    section[data-testid="stSidebar"]
+    div[data-testid="stFileUploaderDropzone"] button p,
+    section[data-testid="stSidebar"]
+    div[data-testid="stFileUploaderDropzone"] button span,
+    section[data-testid="stSidebar"]
+    div[data-testid="stFileUploaderDropzone"] button div {
+        color: #111111 !important;
+        opacity: 1 !important;
+    }
+
+    /* Ícono de carga */
+    section[data-testid="stSidebar"]
+    div[data-testid="stFileUploaderDropzone"] svg {
+        color: #111111 !important;
+        fill: #111111 !important;
+        opacity: 1 !important;
+    }
+
+    /* Archivos ya cargados */
+    section[data-testid="stSidebar"]
+    div[data-testid="stFileUploaderFile"] {
+        background-color: #ffffff !important;
+        color: #111111 !important;
+        border-radius: 6px;
+    }
+
+    section[data-testid="stSidebar"]
+    div[data-testid="stFileUploaderFile"] * {
+        color: #111111 !important;
+    }
+
+    /* =====================================================
+       KPIs Y PANELES
+    ===================================================== */
+    .kpi-card {
+        background: #ffffff;
+        border: 1px solid #e1e5ea;
+        border-radius: 14px;
+        padding: 18px 20px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        min-height: 115px;
+    }
+
+    .kpi-title {
+        font-size: 13px;
+        color: #111111;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .kpi-value {
+        font-size: 34px;
+        color: #111111;
+        font-weight: 900;
+        line-height: 1.1;
+    }
+
+    .kpi-note {
+        font-size: 13px;
+        color: #657080;
+    }
+
+    .panel {
+        background: #ffffff;
+        border: 1px solid #e1e5ea;
+        border-radius: 14px;
+        padding: 18px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+
+    .critical-note {
+        background: #fff1f1;
+        border-left: 5px solid #dc2626;
+        padding: 11px 14px;
+        border-radius: 5px;
+        margin: 8px 0 15px 0;
+        color: #7f1d1d;
+    }
+
+    /* =====================================================
+       BOTONES
+    ===================================================== */
     div[data-testid="stDownloadButton"] button,
-div.stButton > button {
-    background: #ffc400;
-    color: #111;
-    border: none;
-    font-weight: 800;
-    border-radius: 8px;
-}
+    div.stButton > button {
+        background: #ffc400 !important;
+        color: #111111 !important;
+        border: none !important;
+        font-weight: 800 !important;
+        border-radius: 8px !important;
+    }
 
-div[data-testid="stFileUploader"] {
-    border: 1px dashed #ffc400;
-    border-radius: 10px;
-    padding: 8px;
-}
-
-/* Corrección del cargador de archivos */
-section[data-testid="stSidebar"]
-div[data-testid="stFileUploaderDropzone"] {
-    background-color: #ffffff;
-    border-radius: 10px;
-}
-
-section[data-testid="stSidebar"]
-div[data-testid="stFileUploaderDropzone"] * {
-    color: #111111 !important;
-}
-
-section[data-testid="stSidebar"]
-div[data-testid="stFileUploaderDropzone"] small {
-    color: #5b6470 !important;
-}
-
-section[data-testid="stSidebar"]
-div[data-testid="stFileUploaderDropzone"] button {
-    background-color: #ffc400 !important;
-    color: #111111 !important;
-    border: none !important;
-    font-weight: 700 !important;
-}
-
-section[data-testid="stSidebar"]
-div[data-testid="stFileUploaderDropzone"] button * {
-    color: #111111 !important;
-}
-
-section[data-testid="stSidebar"]
-div[data-testid="stFileUploaderDropzone"] svg {
-    fill: #111111 !important;
-    color: #111111 !important;
-}
+    div[data-testid="stDownloadButton"] button *,
+    div.stButton > button * {
+        color: #111111 !important;
+    }
     </style>
     """,
     unsafe_allow_html=True,
