@@ -30,7 +30,7 @@ st.markdown(
     .main-title {font-size: 34px; font-weight: 900; color:#111; margin-bottom:0px;}
     .subtitle {font-size: 16px; color:#5b6470; margin-top:0px;}
     section[data-testid="stSidebar"] {background: linear-gradient(180deg,#090909 50%,#1a1a1a 100%);}
-    section[data-testid="stSidebar"] * {color: #090909;}
+    section[data-testid="stSidebar"] * {color: #e1e5ea;}
     .brand-box {background:#ffc400; color:#111 !important; padding:14px 16px; border-radius:6px; font-size:26px; font-weight:900; letter-spacing:1px; text-align:center; border:2px solid #ffffff33;}
     .step-card {border:1px solid #444; border-radius:10px; padding:14px; margin-bottom:14px; background:#141414;}
     .step-number {display:inline-block; background:#ffc400; color:#111 !important; border-radius:50%; width:28px; height:28px; text-align:center; font-weight:900; line-height:28px; margin-right:8px;}
