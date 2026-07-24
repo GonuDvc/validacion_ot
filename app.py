@@ -910,10 +910,10 @@ st.markdown(
     '<p class="subtitle">Validación de horómetro, motivo de detención, síntoma, códigos principales, descripción de actividades y firmas de la Orden de Trabajo.</p>',
     unsafe_allow_html=True,
 )
-st.markdown(
-    '<div class="critical-note"><b>Campos revisados:</b> Horómetro, motivo de detención, descripción del síntoma, Código trabajo, Código síntoma, Código causa, descripción de actividades y firmas. <b>Críticos:</b> los tres códigos y ambas firmas. Los códigos causa <b>6.6</b> y <b>7.1</b> se consideran inválidos.</div>',
-    unsafe_allow_html=True,
-)
+##st.markdown(
+##    '<div class="critical-note"><b>Campos revisados:</b> Horómetro, motivo de detención, descripción del síntoma, Código trabajo, Código síntoma, Código causa, descripción de actividades y firmas. <b>Críticos:</b> los tres códigos y ambas firmas. Los códigos causa <b>6.6</b> y <b>7.1</b> se consideran inválidos.</div>',
+##    unsafe_allow_html=True,
+##)
 
 if "results" not in st.session_state:
     st.session_state.results = None
