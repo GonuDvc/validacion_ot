@@ -29,16 +29,16 @@ st.markdown(
     .stApp { background: #f6f7f9; }
     .main-title {font-size: 34px; font-weight: 900; color:#111; margin-bottom:0px;}
     .subtitle {font-size: 16px; color:#5b6470; margin-top:0px;}
-    section[data-testid="stSidebar"] {background: linear-gradient(180deg,#090909 50%,#1a1a1a 100%);}
-    section[data-testid="stSidebar"] * {color: #e1e5ea;}
+    section[data-testid="stSidebar"] {background: linear-gradient(180deg,#090909 0%,#1a1a1a 100%);}
+    section[data-testid="stSidebar"] * {color: #fff;}
     .brand-box {background:#ffc400; color:#111 !important; padding:14px 16px; border-radius:6px; font-size:26px; font-weight:900; letter-spacing:1px; text-align:center; border:2px solid #ffffff33;}
     .step-card {border:1px solid #444; border-radius:10px; padding:14px; margin-bottom:14px; background:#141414;}
     .step-number {display:inline-block; background:#ffc400; color:#111 !important; border-radius:50%; width:28px; height:28px; text-align:center; font-weight:900; line-height:28px; margin-right:8px;}
-    .kpi-card {background:white; border:1px solid #e1e5ea; border-radius:14px; padding:18px 20px; box-shadow:25 1px 4px rgba(0,0,0,0.04); min-height:115px;}
+    .kpi-card {background:white; border:1px solid #e1e5ea; border-radius:14px; padding:18px 20px; box-shadow:0 1px 4px rgba(0,0,0,0.04); min-height:115px;}
     .kpi-title {font-size:13px; color:#111; font-weight:800; text-transform:uppercase;}
     .kpi-value {font-size:34px; color:#111; font-weight:900; line-height:1.1;}
     .kpi-note {font-size:13px; color:#657080;}
-    .panel {background:white; border:1px solid #e1e5ea; border-radius:14px; padding:18px; box-shadow:25 1px 4px rgba(0,0,0,0.04);}
+    .panel {background:white; border:1px solid #e1e5ea; border-radius:14px; padding:18px; box-shadow:0 1px 4px rgba(0,0,0,0.04);}
     .critical-note {background:#fff1f1; border-left:5px solid #dc2626; padding:11px 14px; border-radius:5px; margin:8px 0 15px 0; color:#7f1d1d;}
     div[data-testid="stDownloadButton"] button, div.stButton > button {background:#ffc400; color:#111; border:none; font-weight:800; border-radius:8px;}
     div[data-testid="stFileUploader"] {border:1px dashed #ffc400; border-radius:10px; padding:8px;}
@@ -183,6 +183,18 @@ def normalize_value(value: Any) -> str:
 
 def is_filled(value: Any) -> bool:
     return normalize_value(value) != ""
+
+
+def is_zero_numeric(value: Any) -> bool:
+    """Retorna True cuando el valor corresponde numéricamente a cero."""
+    text = normalize_value(value).replace(",", ".")
+    if not text:
+        return False
+
+    try:
+        return abs(float(text)) < 1e-9
+    except (TypeError, ValueError):
+        return False
 
 
 def is_invalid_cause_code(value: Any) -> bool:
@@ -389,13 +401,26 @@ def validate_work_order(file_bytes: bytes, filename: str) -> Dict[str, Any]:
     # ---------------------------------------------------------
     # CAMPOS ESENCIALES DEFINIDOS PARA LA VALIDACIÓN DE LA OT
     # ---------------------------------------------------------
-    # 1) Horómetro.
-    validate_single_cells(
-        ws,
-        missing,
-        "Información general",
-        [("Horómetro", "G13")],
-    )
+    # 1) Horómetro. Debe contener información y ser distinto de cero.
+    horometer_cell = "G13"
+    horometer_value = get_value(ws, horometer_cell)
+
+    if not is_filled(horometer_value):
+        add_missing(
+            missing,
+            "Información general",
+            "Horómetro",
+            horometer_cell,
+            "Campo requerido sin información",
+        )
+    elif is_zero_numeric(horometer_value):
+        add_missing(
+            missing,
+            "Información general",
+            "Horómetro",
+            horometer_cell,
+            "Valor 0: se considera falta de información en el horómetro",
+        )
 
     # 2) Motivo de detención del equipo.
     validate_single_cells(
@@ -879,7 +904,7 @@ def build_pdf_report(
 # ============================================================
 with st.sidebar:
     st.markdown('<div class="brand-box">FINNING | CAT</div>', unsafe_allow_html=True)
-    ##st.markdown("## VALIDACIÓN\n## ÓRDENES DE TRABAJO")
+    st.markdown("## VALIDACIÓN\n## ÓRDENES DE TRABAJO")
     st.markdown("---")
     st.markdown(
         '<div class="step-card"><span class="step-number">1</span><b>Subir archivos Excel</b><br><small>Formatos: .xlsx, .xlsm o .zip con varias OT.</small></div>',
@@ -895,12 +920,12 @@ with st.sidebar:
         '<div class="step-card"><span class="step-number">2</span><b>Validar órdenes</b><br><small>Se revisan únicamente los campos esenciales definidos.</small></div>',
         unsafe_allow_html=True,
     )
-    validate_btn = st.button("▶ Validar órdenes", use_container_width=True)
+    validate_btn = st.button("▶️ Validar órdenes", use_container_width=True)
     st.markdown(
         '<div class="step-card"><span class="step-number">3</span><b>Descargar reporte</b><br><small>Se generan reportes en Excel y PDF.</small></div>',
         unsafe_allow_html=True,
     )
-    ##st.caption("Prioridad crítica: código trabajo, síntoma, causa y firmas. Causa 6.6 o 7.1 = inválida.")
+    st.caption("Prioridad crítica: código trabajo, síntoma, causa y firmas. Causa 6.6 o 7.1 = inválida.")
 
 # ============================================================
 # Pantalla principal
@@ -910,10 +935,10 @@ st.markdown(
     '<p class="subtitle">Validación de horómetro, motivo de detención, síntoma, códigos principales, descripción de actividades y firmas de la Orden de Trabajo.</p>',
     unsafe_allow_html=True,
 )
-##st.markdown(
-##    '<div class="critical-note"><b>Campos revisados:</b> Horómetro, motivo de detención, descripción del síntoma, Código trabajo, Código síntoma, Código causa, descripción de actividades y firmas. <b>Críticos:</b> los tres códigos y ambas firmas. Los códigos causa <b>6.6</b> y <b>7.1</b> se consideran inválidos.</div>',
-##    unsafe_allow_html=True,
-##)
+st.markdown(
+    '<div class="critical-note"><b>Campos revisados:</b> Horómetro, motivo de detención, descripción del síntoma, Código trabajo, Código síntoma, Código causa, descripción de actividades y firmas. <b>Críticos:</b> los tres códigos y ambas firmas. Los códigos causa <b>6.6</b> y <b>7.1</b> se consideran inválidos.</div>',
+    unsafe_allow_html=True,
+)
 
 if "results" not in st.session_state:
     st.session_state.results = None
@@ -944,7 +969,7 @@ if validate_btn:
             st.session_state.results = {"results": results, "errors": errors}
 
 if st.session_state.results is None:
-    st.info("Sube una o varias órdenes de trabajo y presiona **Validar órdenes** para generar el reporte.")
+    st.info("Sube una o varias órdenes de trabajo y presiona *Validar órdenes* para generar el reporte.")
     st.stop()
 
 results = st.session_state.results["results"]
@@ -1123,7 +1148,7 @@ pdf_bytes = build_pdf_report(summary_df, detail_df, field_summary_df)
 download_excel, download_pdf, _ = st.columns([1, 1, 2])
 with download_excel:
     st.download_button(
-        "⬇ Descargar Excel",
+        "⬇️ Descargar Excel",
         data=excel_bytes,
         file_name=f"reporte_validacion_ot_{datetime.now().strftime('%Y%m%d_%H%M')}.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -1131,7 +1156,7 @@ with download_excel:
     )
 with download_pdf:
     st.download_button(
-        "⬇ Descargar PDF",
+        "⬇️ Descargar PDF",
         data=pdf_bytes,
         file_name=f"reporte_ejecutivo_ot_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
         mime="application/pdf",
@@ -1143,15 +1168,15 @@ with st.expander("Campos revisados en el formato OT"):
         """
         La validación considera exclusivamente los siguientes campos:
 
-        - **Horómetro**.
-        - **Motivo de detención del equipo**.
-        - **Descripción del síntoma**.
-        - **Código trabajo**.
-        - **Código síntoma**.
-        - **Código causa**; los valores **6.6** y **7.1** se consideran inválidos porque corresponden a la categoría “Otros”.
-        - **Descripción de actividades**.
-        - **Firma del jefe de turno**, verificando nombre y RUT.
-        - **Firma del técnico responsable**, verificando nombre y RUT.
+        - *Horómetro; debe contener un valor distinto de **0*.
+        - *Motivo de detención del equipo*.
+        - *Descripción del síntoma*.
+        - *Código trabajo*.
+        - *Código síntoma*.
+        - *Código causa; los valores **6.6* y *7.1* se consideran inválidos porque corresponden a la categoría “Otros”.
+        - *Descripción de actividades*.
+        - *Firma del jefe de turno*, verificando nombre y RUT.
+        - *Firma del técnico responsable*, verificando nombre y RUT.
 
         No se generan observaciones por ningún otro campo del anverso o reverso.
         """
