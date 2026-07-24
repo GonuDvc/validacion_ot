@@ -879,7 +879,7 @@ def build_pdf_report(
 # ============================================================
 with st.sidebar:
     st.markdown('<div class="brand-box">FINNING | CAT</div>', unsafe_allow_html=True)
-    st.markdown("## VALIDACIÓN\n## ÓRDENES DE TRABAJO")
+    ##st.markdown("## VALIDACIÓN\n## ÓRDENES DE TRABAJO")
     st.markdown("---")
     st.markdown(
         '<div class="step-card"><span class="step-number">1</span><b>Subir archivos Excel</b><br><small>Formatos: .xlsx, .xlsm o .zip con varias OT.</small></div>',
@@ -900,7 +900,7 @@ with st.sidebar:
         '<div class="step-card"><span class="step-number">3</span><b>Descargar reporte</b><br><small>Se generan reportes en Excel y PDF.</small></div>',
         unsafe_allow_html=True,
     )
-    st.caption("Prioridad crítica: código trabajo, síntoma, causa y firmas. Causa 6.6 o 7.1 = inválida.")
+    ##st.caption("Prioridad crítica: código trabajo, síntoma, causa y firmas. Causa 6.6 o 7.1 = inválida.")
 
 # ============================================================
 # Pantalla principal
