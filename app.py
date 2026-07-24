@@ -49,6 +49,57 @@ st.markdown(
     .critical-note {background:#fff1f1; border-left:5px solid #dc2626; padding:11px 14px; border-radius:5px; margin:8px 0 15px 0; color:#7f1d1d;}
     div[data-testid="stDownloadButton"] button, div.stButton > button {background:#ffc400; color:#111; border:none; font-weight:800; border-radius:8px;}
     div[data-testid="stFileUploader"] {border:1px dashed #ffc400; border-radius:10px; padding:8px;}
+
+    div[data-testid="stDownloadButton"] button,
+div.stButton > button {
+    background: #ffc400;
+    color: #111;
+    border: none;
+    font-weight: 800;
+    border-radius: 8px;
+}
+
+div[data-testid="stFileUploader"] {
+    border: 1px dashed #ffc400;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+/* Corrección del cargador de archivos */
+section[data-testid="stSidebar"]
+div[data-testid="stFileUploaderDropzone"] {
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+section[data-testid="stSidebar"]
+div[data-testid="stFileUploaderDropzone"] * {
+    color: #111111 !important;
+}
+
+section[data-testid="stSidebar"]
+div[data-testid="stFileUploaderDropzone"] small {
+    color: #5b6470 !important;
+}
+
+section[data-testid="stSidebar"]
+div[data-testid="stFileUploaderDropzone"] button {
+    background-color: #ffc400 !important;
+    color: #111111 !important;
+    border: none !important;
+    font-weight: 700 !important;
+}
+
+section[data-testid="stSidebar"]
+div[data-testid="stFileUploaderDropzone"] button * {
+    color: #111111 !important;
+}
+
+section[data-testid="stSidebar"]
+div[data-testid="stFileUploaderDropzone"] svg {
+    fill: #111111 !important;
+    color: #111111 !important;
+}
     </style>
     """,
     unsafe_allow_html=True,
