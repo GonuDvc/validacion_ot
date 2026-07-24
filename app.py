@@ -939,7 +939,7 @@ with st.sidebar:
         st.image(str(LOGO_PATH), use_container_width=True)
     else:
         st.warning("No se encontró el archivo Finning-CAT.png en la carpeta del proyecto.")
-    st.markdown("## VALIDACIÓN\n## ÓRDENES DE TRABAJO")
+    ##st.markdown("## VALIDACIÓN\n## ÓRDENES DE TRABAJO")
     st.markdown("---")
     st.markdown(
         '<div class="step-card"><span class="step-number">1</span><b>Subir archivos Excel</b><br><small>Formatos: .xlsx, .xlsm o .zip con varias OT.</small></div>',
