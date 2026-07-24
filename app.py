@@ -904,7 +904,7 @@ def build_pdf_report(
 # ============================================================
 with st.sidebar:
     st.markdown('<div class="brand-box">FINNING | CAT</div>', unsafe_allow_html=True)
-    st.markdown("## VALIDACIÓN\n## ÓRDENES DE TRABAJO")
+    ##st.markdown("## VALIDACIÓN\n## ÓRDENES DE TRABAJO")
     st.markdown("---")
     st.markdown(
         '<div class="step-card"><span class="step-number">1</span><b>Subir archivos Excel</b><br><small>Formatos: .xlsx, .xlsm o .zip con varias OT.</small></div>',
