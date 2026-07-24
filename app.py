@@ -955,12 +955,12 @@ with st.sidebar:
         '<div class="step-card"><span class="step-number">2</span><b>Validar órdenes</b><br><small>Se revisan únicamente los campos esenciales definidos.</small></div>',
         unsafe_allow_html=True,
     )
-    validate_btn = st.button("▶️ Validar órdenes", use_container_width=True)
+    validate_btn = st.button("Validar órdenes", use_container_width=True)
     st.markdown(
         '<div class="step-card"><span class="step-number">3</span><b>Descargar reporte</b><br><small>Se generan reportes en Excel y PDF.</small></div>',
         unsafe_allow_html=True,
     )
-    st.caption("Prioridad crítica: código trabajo, síntoma, causa y firmas. Causa 6.6 o 7.1 = inválida.")
+    ##st.caption("Prioridad crítica: código trabajo, síntoma, causa y firmas. Causa 6.6 o 7.1 = inválida.")
 
 # ============================================================
 # Pantalla principal
@@ -970,10 +970,10 @@ st.markdown(
     '<p class="subtitle">Validación de horómetro, motivo de detención, síntoma, códigos principales, descripción de actividades y firmas de la Orden de Trabajo.</p>',
     unsafe_allow_html=True,
 )
-st.markdown(
-    '<div class="critical-note"><b>Campos revisados:</b> Horómetro, motivo de detención, descripción del síntoma, Código trabajo, Código síntoma, Código causa, descripción de actividades y firmas. <b>Críticos:</b> los tres códigos y ambas firmas. Los códigos causa <b>6.6</b> y <b>7.1</b> se consideran inválidos.</div>',
-    unsafe_allow_html=True,
-)
+##st.markdown(
+##    '<div class="critical-note"><b>Campos revisados:</b> Horómetro, motivo de detención, descripción del síntoma, Código trabajo, Código síntoma, Código causa, descripción de actividades y firmas. <b>Críticos:</b> los tres códigos y ambas firmas. Los códigos causa <b>6.6</b> y <b>7.1</b> se consideran inválidos.</div>',
+##    unsafe_allow_html=True,
+##)
 
 if "results" not in st.session_state:
     st.session_state.results = None
@@ -1183,7 +1183,7 @@ pdf_bytes = build_pdf_report(summary_df, detail_df, field_summary_df)
 download_excel, download_pdf, _ = st.columns([1, 1, 2])
 with download_excel:
     st.download_button(
-        "⬇️ Descargar Excel",
+        "Descargar Excel",
         data=excel_bytes,
         file_name=f"reporte_validacion_ot_{datetime.now().strftime('%Y%m%d_%H%M')}.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -1191,7 +1191,7 @@ with download_excel:
     )
 with download_pdf:
     st.download_button(
-        "⬇️ Descargar PDF",
+        "Descargar PDF",
         data=pdf_bytes,
         file_name=f"reporte_ejecutivo_ot_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
         mime="application/pdf",
