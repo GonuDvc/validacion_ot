@@ -661,7 +661,7 @@ def build_excel_report(
         body_fmt = workbook.add_format({"border": 1, "valign": "top"})
         bad_fmt = workbook.add_format({"bg_color": "#FFECEC", "font_color": "#C00000", "border": 1})
         critical_fmt = workbook.add_format({"bg_color": "#FECACA", "font_color": "#991B1B", "border": 1, "bold": True})
-        ok_fmt = workbook.add_format({"bg_color": "#E7F7ED", "font_color": "#15803D", "border": 1})
+        ok_fmt = workbook.add_format({"bg_color": "#E7F7ED", "font_color": "#F7C625", "border": 1})
         title_fmt = workbook.add_format({"bold": True, "font_size": 18, "bg_color": "#111111", "font_color": "#FFFFFF", "align": "center"})
         kpi_title_fmt = workbook.add_format({"bold": True, "bg_color": "#FFC400", "border": 1, "align": "center"})
         kpi_value_fmt = workbook.add_format({"bold": True, "font_size": 20, "border": 1, "align": "center"})
