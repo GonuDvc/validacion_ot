@@ -38,7 +38,7 @@ st.markdown(
     .kpi-title {font-size:13px; color:#111; font-weight:800; text-transform:uppercase;}
     .kpi-value {font-size:34px; color:#111; font-weight:900; line-height:1.1;}
     .kpi-note {font-size:13px; color:#657080;}
-    .panel {background:white; border:1px solid #e1e5ea; border-radius:14px; padding:18px; box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+    .panel {background:white; border:1px solid #e1e5ea; border-radius:14px; padding:18px; box-shadow:25 1px 4px rgba(0,0,0,0.04);}
     .critical-note {background:#fff1f1; border-left:5px solid #dc2626; padding:11px 14px; border-radius:5px; margin:8px 0 15px 0; color:#7f1d1d;}
     div[data-testid="stDownloadButton"] button, div.stButton > button {background:#ffc400; color:#111; border:none; font-weight:800; border-radius:8px;}
     div[data-testid="stFileUploader"] {border:1px dashed #ffc400; border-radius:10px; padding:8px;}
