@@ -1148,7 +1148,7 @@ pdf_bytes = build_pdf_report(summary_df, detail_df, field_summary_df)
 download_excel, download_pdf, _ = st.columns([1, 1, 2])
 with download_excel:
     st.download_button(
-        "⬇️ Descargar Excel",
+        "Descargar Excel",
         data=excel_bytes,
         file_name=f"reporte_validacion_ot_{datetime.now().strftime('%Y%m%d_%H%M')}.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -1156,7 +1156,7 @@ with download_excel:
     )
 with download_pdf:
     st.download_button(
-        "⬇️ Descargar PDF",
+        "Descargar PDF",
         data=pdf_bytes,
         file_name=f"reporte_ejecutivo_ot_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
         mime="application/pdf",
