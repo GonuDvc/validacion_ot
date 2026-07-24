@@ -1,6 +1,7 @@
 import io
 import zipfile
 from datetime import datetime
+from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 import pandas as pd
@@ -20,6 +21,12 @@ st.set_page_config(
     layout="wide",
 )
 
+APP_DIR = Path(_file_).resolve().parent
+LOGO_PATH = APP_DIR / "Finning-CAT.png"
+OK_COLOR = "#FFC400"
+OBS_COLOR = "#EF4444"
+
+
 # ============================================================
 # Estilos visuales
 # ============================================================
@@ -29,16 +36,16 @@ st.markdown(
     .stApp { background: #f6f7f9; }
     .main-title {font-size: 34px; font-weight: 900; color:#111; margin-bottom:0px;}
     .subtitle {font-size: 16px; color:#5b6470; margin-top:0px;}
-    section[data-testid="stSidebar"] {background: linear-gradient(180deg,#090909 50%,#1a1a1a 100%);}
-    section[data-testid="stSidebar"] * {color: #e1e5ea;}
-    .brand-box {background:#ffc400; color:#111 !important; padding:14px 16px; border-radius:6px; font-size:26px; font-weight:900; letter-spacing:1px; text-align:center; border:2px solid #ffffff33;}
+    section[data-testid="stSidebar"] {background: linear-gradient(180deg,#090909 0%,#1a1a1a 100%);}
+    section[data-testid="stSidebar"] * {color: #fff;}
+    section[data-testid="stSidebar"] div[data-testid="stImage"] {background:#ffffff; border-radius:6px; padding:4px; border:1px solid #ffffff55;}
     .step-card {border:1px solid #444; border-radius:10px; padding:14px; margin-bottom:14px; background:#141414;}
     .step-number {display:inline-block; background:#ffc400; color:#111 !important; border-radius:50%; width:28px; height:28px; text-align:center; font-weight:900; line-height:28px; margin-right:8px;}
-    .kpi-card {background:white; border:1px solid #e1e5ea; border-radius:14px; padding:18px 20px; box-shadow:25 1px 4px rgba(0,0,0,0.04); min-height:115px;}
+    .kpi-card {background:white; border:1px solid #e1e5ea; border-radius:14px; padding:18px 20px; box-shadow:0 1px 4px rgba(0,0,0,0.04); min-height:115px;}
     .kpi-title {font-size:13px; color:#111; font-weight:800; text-transform:uppercase;}
     .kpi-value {font-size:34px; color:#111; font-weight:900; line-height:1.1;}
     .kpi-note {font-size:13px; color:#657080;}
-    .panel {background:white; border:1px solid #e1e5ea; border-radius:14px; padding:18px; box-shadow:25 1px 4px rgba(0,0,0,0.04);}
+    .panel {background:white; border:1px solid #e1e5ea; border-radius:14px; padding:18px; box-shadow:0 1px 4px rgba(0,0,0,0.04);}
     .critical-note {background:#fff1f1; border-left:5px solid #dc2626; padding:11px 14px; border-radius:5px; margin:8px 0 15px 0; color:#7f1d1d;}
     div[data-testid="stDownloadButton"] button, div.stButton > button {background:#ffc400; color:#111; border:none; font-weight:800; border-radius:8px;}
     div[data-testid="stFileUploader"] {border:1px dashed #ffc400; border-radius:10px; padding:8px;}
@@ -661,7 +668,7 @@ def build_excel_report(
         body_fmt = workbook.add_format({"border": 1, "valign": "top"})
         bad_fmt = workbook.add_format({"bg_color": "#FFECEC", "font_color": "#C00000", "border": 1})
         critical_fmt = workbook.add_format({"bg_color": "#FECACA", "font_color": "#991B1B", "border": 1, "bold": True})
-        ok_fmt = workbook.add_format({"bg_color": "#E7F7ED", "font_color": "#010000", "border": 1})
+        ok_fmt = workbook.add_format({"bg_color": "#FFC400", "font_color": "#111111", "border": 1})
         title_fmt = workbook.add_format({"bold": True, "font_size": 18, "bg_color": "#111111", "font_color": "#FFFFFF", "align": "center"})
         kpi_title_fmt = workbook.add_format({"bold": True, "bg_color": "#FFC400", "border": 1, "align": "center"})
         kpi_value_fmt = workbook.add_format({"bold": True, "font_size": 20, "border": 1, "align": "center"})
@@ -748,8 +755,8 @@ def build_excel_report(
                     "name": "Conforme",
                     "categories": ["Cumplimiento por campo", 1, 0, last_row, 0],
                     "values": ["Cumplimiento por campo", 1, 3, last_row, 3],
-                    "fill": {"color": "#22C55E"},
-                    "border": {"color": "#15803D"},
+                    "fill": {"color": "#FFC400"},
+                    "border": {"color": "#D6A400"},
                     "data_labels": {"value": True, "num_format": r"0.0\%"},
                 }
             )
@@ -786,7 +793,7 @@ def build_excel_report(
                     "categories": ["Dashboard", status_data_row + 1, 1, status_data_row + 2, 1],
                     "values": ["Dashboard", status_data_row + 1, 2, status_data_row + 2, 2],
                     "points": [
-                        {"fill": {"color": "#22C55E"}},
+                        {"fill": {"color": "#FFC400"}},
                         {"fill": {"color": "#EF4444"}},
                     ],
                     "data_labels": {"percentage": True, "category": True},
@@ -844,10 +851,35 @@ def build_pdf_report(
                 ("ALIGN", (0, 0), (-1, -1), "CENTER"),
                 ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
                 ("FONTSIZE", (0, 1), (-1, 1), 18),
+                ("BACKGROUND", (4, 1), (4, 1), colors.HexColor("#FFC400")),
+                ("TEXTCOLOR", (4, 1), (4, 1), colors.black),
             ]
         )
     )
     story.extend([kpi_table, Spacer(1, 0.4 * cm)])
+
+    story.append(Paragraph("Resumen por OT", styles["Heading2"]))
+    pdf_summary_columns = ["Equipo", "Orden", "Estado", "Campos faltantes"]
+    pdf_summary = summary_df[pdf_summary_columns].head(20).copy()
+    pdf_summary_data = [pdf_summary.columns.tolist()] + pdf_summary.astype(str).values.tolist()
+    pdf_summary_table = Table(pdf_summary_data, repeatRows=1, colWidths=[4.0 * cm, 4.0 * cm, 5.0 * cm, 4.0 * cm])
+    pdf_summary_style = [
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#111111")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("GRID", (0, 0), (-1, -1), 0.4, colors.grey),
+        ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+        ("FONTSIZE", (0, 0), (-1, -1), 8),
+        ("ALIGN", (1, 1), (-1, -1), "CENTER"),
+    ]
+    for row_number, estado in enumerate(pdf_summary["Estado"].tolist(), start=1):
+        if estado == "Completa":
+            pdf_summary_style.append(("BACKGROUND", (0, row_number), (-1, row_number), colors.HexColor("#FFC400")))
+            pdf_summary_style.append(("TEXTCOLOR", (0, row_number), (-1, row_number), colors.black))
+        else:
+            pdf_summary_style.append(("BACKGROUND", (0, row_number), (-1, row_number), colors.HexColor("#FFECEC")))
+            pdf_summary_style.append(("TEXTCOLOR", (0, row_number), (-1, row_number), colors.HexColor("#991B1B")))
+    pdf_summary_table.setStyle(TableStyle(pdf_summary_style))
+    story.extend([pdf_summary_table, Spacer(1, 0.4 * cm)])
 
     story.append(Paragraph("Campos faltantes por campo", styles["Heading2"]))
     field_show = field_summary_df.head(15).copy()
@@ -903,8 +935,11 @@ def build_pdf_report(
 # Sidebar
 # ============================================================
 with st.sidebar:
-    st.markdown('<div class="brand-box">FINNING | CAT</div>', unsafe_allow_html=True)
-    ##st.markdown("## VALIDACIÓN\n## ÓRDENES DE TRABAJO")
+    if LOGO_PATH.exists():
+        st.image(str(LOGO_PATH), use_container_width=True)
+    else:
+        st.warning("No se encontró el archivo Finning-CAT.png en la carpeta del proyecto.")
+    st.markdown("## VALIDACIÓN\n## ÓRDENES DE TRABAJO")
     st.markdown("---")
     st.markdown(
         '<div class="step-card"><span class="step-number">1</span><b>Subir archivos Excel</b><br><small>Formatos: .xlsx, .xlsm o .zip con varias OT.</small></div>',
@@ -920,12 +955,12 @@ with st.sidebar:
         '<div class="step-card"><span class="step-number">2</span><b>Validar órdenes</b><br><small>Se revisan únicamente los campos esenciales definidos.</small></div>',
         unsafe_allow_html=True,
     )
-    validate_btn = st.button("Validar órdenes", use_container_width=True)
+    validate_btn = st.button("▶️ Validar órdenes", use_container_width=True)
     st.markdown(
         '<div class="step-card"><span class="step-number">3</span><b>Descargar reporte</b><br><small>Se generan reportes en Excel y PDF.</small></div>',
         unsafe_allow_html=True,
     )
-    ##st.caption("Prioridad crítica: código trabajo, síntoma, causa y firmas. Causa 6.6 o 7.1 = inválida.")
+    st.caption("Prioridad crítica: código trabajo, síntoma, causa y firmas. Causa 6.6 o 7.1 = inválida.")
 
 # ============================================================
 # Pantalla principal
@@ -935,10 +970,10 @@ st.markdown(
     '<p class="subtitle">Validación de horómetro, motivo de detención, síntoma, códigos principales, descripción de actividades y firmas de la Orden de Trabajo.</p>',
     unsafe_allow_html=True,
 )
-##st.markdown(
-##    '<div class="critical-note"><b>Campos revisados:</b> Horómetro, motivo de detención, descripción del síntoma, Código trabajo, Código síntoma, Código causa, descripción de actividades y firmas. <b>Críticos:</b> los tres códigos y ambas firmas. Los códigos causa <b>6.6</b> y <b>7.1</b> se consideran inválidos.</div>',
-##    unsafe_allow_html=True,
-##)
+st.markdown(
+    '<div class="critical-note"><b>Campos revisados:</b> Horómetro, motivo de detención, descripción del síntoma, Código trabajo, Código síntoma, Código causa, descripción de actividades y firmas. <b>Críticos:</b> los tres códigos y ambas firmas. Los códigos causa <b>6.6</b> y <b>7.1</b> se consideran inválidos.</div>',
+    unsafe_allow_html=True,
+)
 
 if "results" not in st.session_state:
     st.session_state.results = None
@@ -1038,7 +1073,7 @@ with left_chart:
         color="Resultado",
         text="Etiqueta",
         barmode="stack",
-        color_discrete_map={"Conforme": "#22c55e", "Con observación": "#ef4444"},
+        color_discrete_map={"Conforme": OK_COLOR, "Con observación": OBS_COLOR},
         category_orders={
             "Campo": list(reversed(VALIDATED_FIELDS)),
             "Resultado": ["Conforme", "Con observación"],
@@ -1075,7 +1110,7 @@ with right_chart:
         names="Estado",
         hole=0.55,
         color="Estado",
-        color_discrete_map={"Completas": "#22c55e", "Con observaciones": "#ef4444"},
+        color_discrete_map={"Completas": OK_COLOR, "Con observaciones": OBS_COLOR},
         template="plotly_white",
     )
     figure.update_layout(
@@ -1148,7 +1183,7 @@ pdf_bytes = build_pdf_report(summary_df, detail_df, field_summary_df)
 download_excel, download_pdf, _ = st.columns([1, 1, 2])
 with download_excel:
     st.download_button(
-        "Descargar Excel",
+        "⬇️ Descargar Excel",
         data=excel_bytes,
         file_name=f"reporte_validacion_ot_{datetime.now().strftime('%Y%m%d_%H%M')}.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -1156,7 +1191,7 @@ with download_excel:
     )
 with download_pdf:
     st.download_button(
-        "Descargar PDF",
+        "⬇️ Descargar PDF",
         data=pdf_bytes,
         file_name=f"reporte_ejecutivo_ot_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
         mime="application/pdf",
