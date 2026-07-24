@@ -260,6 +260,76 @@ st.markdown(
     div.stButton > button * {
         color: #111111 !important;
     }
+
+    /* Traducción visual del cargador */
+
+    section[data-testid="stSidebar"]
+
+    div[data-testid="stFileUploaderDropzoneInstructions"] > div > span {
+
+        font-size: 0 !important;
+
+    }
+
+    section[data-testid="stSidebar"]
+
+    div[data-testid="stFileUploaderDropzoneInstructions"] > div > span::after {
+
+        content: "Arrastra y suelta los archivos aquí";
+
+        font-size: 16px !important;
+
+        color: #111111 !important;
+
+    }
+
+    section[data-testid="stSidebar"]
+
+    div[data-testid="stFileUploaderDropzoneInstructions"] small {
+
+        font-size: 0 !important;
+
+    }
+
+    section[data-testid="stSidebar"]
+
+    div[data-testid="stFileUploaderDropzoneInstructions"] small::after {
+
+        content: "Límite 1 GB por archivo · XLSX, XLSM o ZIP";
+
+        font-size: 13px !important;
+
+        color: #5b6470 !important;
+
+    }
+
+    section[data-testid="stSidebar"]
+
+    div[data-testid="stFileUploaderDropzone"] button {
+
+        font-size: 0 !important;
+
+    }
+
+    section[data-testid="stSidebar"]
+
+    div[data-testid="stFileUploaderDropzone"] button::after {
+
+        content: "Seleccionar archivos";
+
+        font-size: 15px !important;
+
+        color: #111111 !important;
+
+    }
+
+    </style>
+
+    """,
+
+    unsafe_allow_html=True,
+
+)
     </style>
     """,
     unsafe_allow_html=True,
