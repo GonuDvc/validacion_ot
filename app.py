@@ -21,7 +21,7 @@ st.set_page_config(
     layout="wide",
 )
 
-APP_DIR = Path(_file_).resolve().parent
+APP_DIR = Path(__file__).resolve().parent
 LOGO_PATH = APP_DIR / "Finning-CAT.png"
 OK_COLOR = "#FFC400"
 OBS_COLOR = "#EF4444"
