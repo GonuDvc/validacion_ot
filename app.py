@@ -34,7 +34,7 @@ st.markdown(
     .brand-box {background:#ffc400; color:#111 !important; padding:14px 16px; border-radius:6px; font-size:26px; font-weight:900; letter-spacing:1px; text-align:center; border:2px solid #ffffff33;}
     .step-card {border:1px solid #444; border-radius:10px; padding:14px; margin-bottom:14px; background:#141414;}
     .step-number {display:inline-block; background:#ffc400; color:#111 !important; border-radius:50%; width:28px; height:28px; text-align:center; font-weight:900; line-height:28px; margin-right:8px;}
-    .kpi-card {background:white; border:1px solid #e1e5ea; border-radius:14px; padding:18px 20px; box-shadow:0 1px 4px rgba(0,0,0,0.04); min-height:115px;}
+    .kpi-card {background:black; border:1px solid #e1e5ea; border-radius:14px; padding:18px 20px; box-shadow:0 1px 4px rgba(0,0,0,0.04); min-height:115px;}
     .kpi-title {font-size:13px; color:#111; font-weight:800; text-transform:uppercase;}
     .kpi-value {font-size:34px; color:#111; font-weight:900; line-height:1.1;}
     .kpi-note {font-size:13px; color:#657080;}
